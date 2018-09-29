@@ -37,9 +37,17 @@ char *PLD_strstr(char *haystack, char *needle, int insensitive)
 
 	if (insensitive > 0)
 	{
+#ifndef WIN32
 		hs = strdup(haystack);
+#else
+		hs = _strdup(haystack);
+#endif
 		PLD_strlower(hs);
+#ifndef WIN32
 		ne = strdup(needle);
+#else
+		ne = _strdup(needle);
+#endif
 		PLD_strlower(ne);
 	} else {
 		hs = haystack;

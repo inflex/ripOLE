@@ -84,12 +84,20 @@ int ROLE_parse_parameters( struct ripOLE_object *role, int argc, char **argv )
 			{
 				case 'i':
 					i++;
+#ifndef WIN32
 					role->inputfile = strdup(argv[i]);
+#else
+					role->inputfile = _strdup(argv[i]);
+#endif
 					break;
 
 				case 'd':
 					i++;
+#ifndef WIN32
 					role->outputdir = strdup(argv[i]);
+#else
+					role->outputdir = _strdup(argv[i]);
+#endif
 					break;
 
 				case 'v':
