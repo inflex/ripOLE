@@ -319,9 +319,11 @@ int LOGGER_log( char *format, ...)
 		case _LOGGER_STDERR:
 			fprintf(stderr,"%s%s",output, lineend );
 			break;
+#ifndef WIN32
 		case _LOGGER_SYSLOG:
 			syslog(_LOGGER_syslog_mode,"%s",output);
 			break;
+#endif
 		case _LOGGER_STDOUT:
 			fprintf(stdout,"%s%s",output, lineend);
 			fflush(stdout);
