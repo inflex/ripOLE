@@ -3,6 +3,6 @@
 
 make
 
-./ripole your-ole.doc
+./ripole -i officefile.doc -v -d tmp
 
 

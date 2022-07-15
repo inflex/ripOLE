@@ -1,6 +1,6 @@
 
 OBJS= ole.o olestream-unwrap.o bytedecoders.o logger.o pldstr.o bt-int.o
-CFLAGS=-Wall -g -O2 -I. -Werror
+CFLAGS=-Wall -g -O2 -I.
 
 
 .c.o:
