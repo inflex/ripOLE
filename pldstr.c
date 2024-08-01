@@ -10,23 +10,22 @@
 #include "logger.h"
 #include "pldstr.h"
 
-
 /*-----------------------------------------------------------------\
  Function Name	: *PLD_strstr
  Returns Type	: char
  	----Parameter List
-	1. char *haystack, 
-	2.  char *needle, 
-	3.  int insensitive, 
+	1. char *haystack,
+	2.  char *needle,
+	3.  int insensitive,
  	------------------
- Exit Codes	: 
- Side Effects	: 
+ Exit Codes	:
+ Side Effects	:
 --------------------------------------------------------------------
  Comments:
- 
+
 --------------------------------------------------------------------
  Changes:
- 
+
 \------------------------------------------------------------------*/
 char *PLD_strstr(char *haystack, char *needle, int insensitive)
 {
@@ -297,7 +296,7 @@ char *PLD_strtok( struct PLD_strtok *st, char *line, char *delimeters )
 
 	result = st->start;
 
-	if ((st->start)&&(st->start != '\0'))
+	if (st->start)
 	{
 		stop = strpbrk( st->start, delimeters ); /* locate our next delimeter */
 
@@ -315,7 +314,6 @@ char *PLD_strtok( struct PLD_strtok *st, char *line, char *delimeters )
 			// Terminate our token.
 
 			*stop = '\0';
-
 
 			// Because we're emulating strtok() behaviour here, we have to
 			// absorb all the concurrent delimeters, that is, unless we
@@ -348,10 +346,8 @@ char *PLD_strtok( struct PLD_strtok *st, char *line, char *delimeters )
 		result = NULL;
 	}
 
-
 	return result;
 }
-
 
 
 /*------------------------------------------------------------------------
@@ -376,7 +372,6 @@ int PLD_strlower( char *convertme )
 	return 0;
 }
 
-
 /*-----------------------------------------------------------------\
   Function Name	: *PLD_strreplace
   Returns Type	: char
@@ -386,11 +381,11 @@ int PLD_strlower( char *convertme )
   3.  char *replacewith, String sequence to replace 'searchfor' with
   4.  int replacenumber , How many times to replace 'searchfor', 0 == unlimited
   ------------------
-  Exit Codes	: Returns a pointer to the new buffer space.  The original 
+  Exit Codes	: Returns a pointer to the new buffer space.  The original
   buffer will still remain intact - ensure that the calling
   program free()'s the original buffer if it's no longer
   needed
-  Side Effects	: 
+  Side Effects	:
   --------------------------------------------------------------------
 Comments:
 Start out with static text matching - upgrade to regex later.
@@ -439,7 +434,7 @@ char *PLD_strreplace_general( struct PLD_strreplace *replace_details )
 		{
 			return replace_details->source;
 		}
-	} 
+	}
 
 	// Determine if initial POSTexist tests will pass, if we don't pick up
 	//		anything here, then there's no point in continuing either
@@ -453,20 +448,19 @@ char *PLD_strreplace_general( struct PLD_strreplace *replace_details )
 			{
 				postexist_location = p;
 				p = p +strlen(replace_details->postexist);
-			} 
+			}
 		} while (p != NULL);
 
 		if (postexist_location == NULL)
 		{
 			return replace_details->source;
 		}
-	} 
-
+	}
 
 	// Step 1 - determine the MAXIMUM number of times we might have to replace this string ( or the limit
 	//		set by replacenumber
 	//
-	//	Note - we only need this number if the string we're going to be inserting into the 
+	//	Note - we only need this number if the string we're going to be inserting into the
 	//	source is larger than the one we're replacing - this is so that we can ensure that
 	//	we have sufficient memory available in the buffer.
 	if (size_difference > 0)
@@ -489,7 +483,6 @@ char *PLD_strreplace_general( struct PLD_strreplace *replace_details )
 		size_required = source_length +(size_difference *replace_count) +1;
 	} else size_required = source_length +1;
 
-	
 	// Allocate the memory required to hold the new string [at least], check to see that
 	//		all went well, if not, then return an error
 	new_buffer = malloc( sizeof(char) *size_required);
@@ -497,20 +490,19 @@ char *PLD_strreplace_general( struct PLD_strreplace *replace_details )
 	{
 		LOGGER_log("%s:%d:PLD_strreplace:ERROR: Cannot allocate %d bytes of memory to perform replacement operation", FL, size_required);
 		return replace_details->source;
-	} 
+	}
 
-	// Our segment must always start at the beginning of the source, 
+	// Our segment must always start at the beginning of the source,
 	//		on the other hand, the segment_end can be anything from the
-	//		next byte to NULL ( which is specially treated to mean to 
+	//		next byte to NULL ( which is specially treated to mean to
 	//		the end of the source )
 	segment_start = replace_details->source;
 
-
-	// Locate the first segment 
+	// Locate the first segment
 	segment_ok = 0;
 	segment_end = PLD_strstr(replace_details->source, replace_details->searchfor, replace_details->insensitive);
 
-	// Determine if the first segment is valid in the presence of the 
+	// Determine if the first segment is valid in the presence of the
 	//	pre-exist and post-exist requirements
 	while ((segment_end != NULL)&&(segment_ok == 0)\
 			&&((replace_details->preexist != NULL)||(replace_details->postexist != NULL)))
@@ -520,14 +512,14 @@ char *PLD_strreplace_general( struct PLD_strreplace *replace_details )
 
 		// The PREexist test assumes a couple of factors - please ensure these are
 		//		relevant if you change any code prior to this point.
-		//	
+		//
 		//	1. preexist_location has already been computed and is not NULL
 		//
 		//	2. By relative position, the first preexist_location will be a valid location
 		//			on which to validate for ALL replacements beyond that point, thus, we
 		//			never actually have to recompute preexist_location again.
 		//
-		// 3. Conversely, the last computed postexist_location is valid for all 
+		// 3. Conversely, the last computed postexist_location is valid for all
 		//			matches before it
 		//
 		if (preexist_location == NULL) pre_ok = 1;
@@ -538,12 +530,12 @@ char *PLD_strreplace_general( struct PLD_strreplace *replace_details )
 
 		if ((pre_ok == 0)||(post_ok == 0)) { segment_end = PLD_strstr(segment_end +searchfor_length, replace_details->searchfor, replace_details->insensitive); }
 		else segment_ok = 1;
-	} 
+	}
 
 	segment_p = segment_start;
 	new_p = new_buffer;
 	while (segment_start != NULL)
-	{	
+	{
 		int replacewith_count;
 		char *replacewith_p;
 
@@ -599,9 +591,9 @@ char *PLD_strreplace_general( struct PLD_strreplace *replace_details )
 			segment_end = NULL;
 		} else {
 			// If our new segment to copy starts after the
-			//		end of the source, then we actually have 
+			//		end of the source, then we actually have
 			//		nothing else to copy, thus, we prepare the
-			//		segment_start varible to cause the while loop 
+			//		segment_start varible to cause the while loop
 			//		to terminate.
 			//
 			// Otherwise, we try and locate the next segment
@@ -609,7 +601,7 @@ char *PLD_strreplace_general( struct PLD_strreplace *replace_details )
 			//		be on the 'other side' of the 'searchfor' string
 			//		which we found in the last search.
 			//
-			if (segment_start > source_end) 
+			if (segment_start > source_end)
 			{
 				segment_start = NULL;
 			} else {
@@ -620,7 +612,7 @@ char *PLD_strreplace_general( struct PLD_strreplace *replace_details )
 
 				// If we have a pre/post-exist requirement, then enter into this
 				//		series of tests.  NOTE - at least one of the pre or post tests
-				//		must fire to give an meaningful result - else we'll end up with 
+				//		must fire to give an meaningful result - else we'll end up with
 				//		a loop which simply goes to the end of the searchspace buffer
 				while ((segment_end != NULL)&&(segment_ok == 0)\
 						&&((replace_details->preexist != NULL)||(replace_details->postexist != NULL)))
@@ -630,14 +622,14 @@ char *PLD_strreplace_general( struct PLD_strreplace *replace_details )
 
 					// The PREexist test assumes a couple of factors - please ensure these are
 					//		relevant if you change any code prior to this point.
-					//	
+					//
 					//	1. preexist_location has already been computed and is not NULL
 					//
 					//	2. By relative position, the first preexist_location will be a valid location
 					//			on which to validate for ALL replacements beyond that point, thus, we
 					//			never actually have to recompute preexist_location again.
 					//
-					// 3. Conversely, the last computed postexist_location is valid for all 
+					// 3. Conversely, the last computed postexist_location is valid for all
 					//			matches before it
 					//
 					if (preexist_location == NULL) pre_ok = 1;
@@ -648,7 +640,7 @@ char *PLD_strreplace_general( struct PLD_strreplace *replace_details )
 
 					if ((pre_ok == 0)||(post_ok == 0)) { segment_end = PLD_strstr(segment_end +searchfor_length, replace_details->searchfor, replace_details->insensitive); }
 					else segment_ok = 1;
-				} 
+				}
 
 			} // If-else segment_start > source_end
 
@@ -667,13 +659,13 @@ char *PLD_strreplace_general( struct PLD_strreplace *replace_details )
   Function Name	: *PLD_strreplace
   Returns Type	: char
   ----Parameter List
-  1. char **source, 
-  2.  char *searchfor, 
-  3.  char *replacewith, 
-  4.  int replacenumber , 
+  1. char **source,
+  2.  char *searchfor,
+  3.  char *replacewith,
+  4.  int replacenumber ,
   ------------------
-  Exit Codes	: 
-  Side Effects	: 
+  Exit Codes	:
+  Side Effects	:
   --------------------------------------------------------------------
 Comments:
 
@@ -701,37 +693,36 @@ char *PLD_strreplace( char **source, char *searchfor, char *replacewith, int rep
 	return *source;
 }
 
-
 /*-----------------------------------------------------------------\
  Function Name	: *PLD_dprintf
  Returns Type	: char
  	----Parameter List
-	1. const char *format, 
-	2.  ..., 
+	1. const char *format,
+	2.  ...,
  	------------------
- Exit Codes	: 
- Side Effects	: 
+ Exit Codes	:
+ Side Effects	:
 --------------------------------------------------------------------
  Comments:
 	This is a dynamic string allocation function, not as fast as some
-	other methods, but it works across the board with both glibc 2.0 
-	and 2.1 series.  
- 
+	other methods, but it works across the board with both glibc 2.0
+	and 2.1 series.
+
 --------------------------------------------------------------------
  Changes:
- 
+
 \------------------------------------------------------------------*/
-char *PLD_dprintf(const char *format, ...) 
+char *PLD_dprintf(const char *format, ...)
 {
 	int n, size = 1024; // Assume we don't need more than 1K to start with
 	char *p;
 	va_list ap;
 
-	// Attempt to allocate and then check 
+	// Attempt to allocate and then check
 	p = malloc(size *sizeof(char));
 	if (p == NULL) return NULL;
 
-	while (1) 
+	while (1)
 	{
 		// Attempt to print out string out into the allocated space
 		va_start(ap, format);
@@ -765,6 +756,5 @@ char *PLD_dprintf(const char *format, ...)
 	}
 
 }
-
 
 //-----------------END.
