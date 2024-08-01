@@ -2,10 +2,29 @@
 	2005-December-12
 
 	ripOLE has now started to become a useful tool in its own
-	right, though it is more directly being developed for 
+	right, though it is more directly being developed for
 	incorporation into ripMIME and subsequently Xamime.
 
 	pldaniels@pldaniels.com
+
+	2024-August-01
+
+	Needed to have this tool working with other tools I'm already
+	using, so I fixed some build errors and created pull request
+	on GitHub in a sincere hope that I'm not breaking any licensing
+	conditions.
+
+	In case you appreciate my tiny contibution, please consider buying
+	me a coffee at https://ko-fi.com/jiripech.
+
+	If you find any errors, please open a new issue, I might later find
+	some time to fix it.
+
+	Diclaimer: I did not test '--save-unknown-streams', but tested
+	creating a standard .doc file, putting a picture in it and
+	extracting the picture from the .doc file.
+
+	- jp -
 
 ---------
 
@@ -14,7 +33,7 @@ To check for [and save] attachments in a MS Office file,
 
 	./ripole -i officefile.doc -v -d tmp
 
-..and ripOLE will decode the attachments to the 'tmp' 
+…and ripOLE will decode the attachments to the 'tmp'
 	directory
 
 	-END.
