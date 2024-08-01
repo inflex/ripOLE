@@ -1,7 +1,6 @@
 
 OBJS= ole.o olestream-unwrap.o bytedecoders.o logger.o pldstr.o bt-int.o
-CFLAGS=-Wall -g -O2 -I. -Werror
-
+CFLAGS=-Wall -g -O2 -I.
 
 .c.o:
 	$(CC) $(CFLAGS) $(DEFINES) -c $*.c
@@ -9,10 +8,10 @@ CFLAGS=-Wall -g -O2 -I. -Werror
 default: ripole
 
 clean:
-	rm -f *.o ripole
+	rm -rf *.o ripole ripole.dSYM
 
 ripole: $(OBJS) ripole.[ch]
-		$(CC) $(CFLAGS) $(OBJS) $(DEFINES) ripole.c -o ripole
-	
+	$(CC) $(CFLAGS) $(OBJS) $(DEFINES) ripole.c -o ripole
+
 validate: ripole
-		cp ripole validate
+	cp ripole validate
