@@ -6,3 +6,6 @@ Source documentation supplied by:
 
 Patches:
 	Chris Hine:0.0.3:2003-07-04: Buffer,bp initialisation patch.
+
+Latest fixes:
+	Jirka Pech (see commits in https://github.com/jiripech/ripOLE for details).
