@@ -20,20 +20,18 @@ struct ripOLE_object {
 
 };
 
-#define ROLE_VERSION "0.2.1"
-
 static char defaultdir[]=".";
-static char version[]="0.2.1 - November 1, 2008 (C) PLDaniels http://www.pldaniels.com/ripole";
+static char version[]="0.2.2 - August 1, 2024 modifications https://github.com/jiripech/ripOLE";
 static char help[]="ripOLE -i <OLE2 file> [ -d <directory> ] [--save-unknown-streams] [--version|-V] [--verbose|-v] [--debug] [--help|-h]";
 
 /*-----------------------------------------------------------------\
   Function Name	: set_defaults
   Returns Type	: int
   ----Parameter List
-  1. struct ripOLE_object *role , 
+  1. struct ripOLE_object *role ,
   ------------------
-  Exit Codes	: 
-  Side Effects	: 
+  Exit Codes	:
+  Side Effects	:
   --------------------------------------------------------------------
 Comments:
 
@@ -56,12 +54,12 @@ int ROLE_set_defaults( struct ripOLE_object *role )
   Function Name	: parse_parameters
   Returns Type	: int
   ----Parameter List
-  1. struct ripOLE_object *role, 
-  2.  int argc, 
-  3.  char **argv , 
+  1. struct ripOLE_object *role,
+  2.  int argc,
+  3.  char **argv ,
   ------------------
-  Exit Codes	: 
-  Side Effects	: 
+  Exit Codes	:
+  Side Effects	:
   --------------------------------------------------------------------
 Comments:
 
@@ -153,11 +151,11 @@ int ROLE_parse_parameters( struct ripOLE_object *role, int argc, char **argv )
   Function Name	: set_parameters
   Returns Type	: int
   ----Parameter List
-  1. struct ripOLE_object *role, 
-  2.  struct OLE_object *ole , 
+  1. struct ripOLE_object *role,
+  2.  struct OLE_object *ole ,
   ------------------
-  Exit Codes	: 
-  Side Effects	: 
+  Exit Codes	:
+  Side Effects	:
   --------------------------------------------------------------------
 Comments:
 
@@ -170,7 +168,7 @@ int ROLE_set_parameters( struct ripOLE_object *role, struct OLE_object *ole )
 	if(role->debug == 1)
 	{
 		OLE_set_debug(ole, OLE_DEBUG_NORMAL);
-	} 
+	}
 
 	if (role->verbose == 1)
 	{
@@ -190,10 +188,10 @@ int ROLE_set_parameters( struct ripOLE_object *role, struct OLE_object *ole )
   Function Name	: ripOLE_report_filename_decoded
   Returns Type	: int
   ----Parameter List
-  1. char *filename, 
+  1. char *filename,
   ------------------
-  Exit Codes	: 
-  Side Effects	: 
+  Exit Codes	:
+  Side Effects	:
   --------------------------------------------------------------------
 Comments:
 
@@ -214,10 +212,10 @@ int ROLE_report_filename_decoded(char *filename)
   Function Name	: ROLE_init
   Returns Type	: int
   ----Parameter List
-  1. struct ripOLE_object *role, 
+  1. struct ripOLE_object *role,
   ------------------
-  Exit Codes	: 
-  Side Effects	: 
+  Exit Codes	:
+  Side Effects	:
   --------------------------------------------------------------------
 Comments:
 
@@ -242,10 +240,10 @@ int ROLE_init(struct ripOLE_object *role)
   Function Name	: ROLE_done
   Returns Type	: int
   ----Parameter List
-  1. struct ripOLE_object *role, 
+  1. struct ripOLE_object *role,
   ------------------
-  Exit Codes	: 
-  Side Effects	: 
+  Exit Codes	:
+  Side Effects	:
   --------------------------------------------------------------------
 Comments:
 
@@ -266,10 +264,10 @@ int ROLE_done(struct ripOLE_object *role)
   Function Name	: ROLE_validate
   Returns Type	: int
   ----Parameter List
-  1. struct ripOLE_object *role , 
+  1. struct ripOLE_object *role ,
   ------------------
-  Exit Codes	: 
-  Side Effects	: 
+  Exit Codes	:
+  Side Effects	:
   --------------------------------------------------------------------
 Comments:
 
@@ -293,11 +291,11 @@ int ROLE_validate(struct ripOLE_object *role )
   Function Name	: main
   Returns Type	: int
   ----Parameter List
-  1. int argc, 
-  2.  char **argv , 
+  1. int argc,
+  2.  char **argv ,
   ------------------
-  Exit Codes	: 
-  Side Effects	: 
+  Exit Codes	:
+  Side Effects	:
   --------------------------------------------------------------------
 Comments:
 
