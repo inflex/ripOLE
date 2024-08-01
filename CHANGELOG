@@ -1,9 +1,11 @@
 
 -----------------------------------ripOLE---------------------
+20240801
+	Made it compile with gcc version 12.2.0 on Debian 12.2.0-14.
 20081101-0215:PLD:DEV
-	Cleaned up source code to make sure it builds without 
+	Cleaned up source code to make sure it builds without
 	errors with the new stricter build defaults on many
-	systems (such as Ubuntu 8.10).  
+	systems (such as Ubuntu 8.10).
 
 	Changed the old bytedecoders file to now use the more
 	sane get_uintX() and get_intX() type calls that make
@@ -18,9 +20,9 @@
 
 	It could be possible to use an external filetype signature
 	library to do this process but because we're only wanting to
-	seek out images and of very few formats it simply isn't 
-	worth the overheads or speed penalty (we don't want to have 
-			to search through 200 bytes looking for up to 1000 
+	seek out images and of very few formats it simply isn't
+	worth the overheads or speed penalty (we don't want to have
+			to search through 200 bytes looking for up to 1000
 			different filetypes).
 
 20051224-1030:PLD:
@@ -36,27 +38,27 @@
 	Fixed up OLE Stream decoding - attachments now come out with
 	 the stream headers correctly stripped off. FINALLY!
 
-	Reverted the sector-ID handling back to a SIGNED 4-byte 
-	integer, as negative values are required to signal 
+	Reverted the sector-ID handling back to a SIGNED 4-byte
+	integer, as negative values are required to signal
 	special sector ID's.
 
 20050315-1544:PLD:
 	Added last-sector check sanitisation while stepping along
 	FAT/miniFAT streams
 
-20050119-2108:PLD: 
+20050119-2108:PLD:
 	Added filename sanitization, so that obscure 8-bit values
 		didn't get used.  See OLEUNWRAP_sanitize_filename()
 
-20041127-2051:PLD: 
+20041127-2051:PLD:
 	Added sanity checking for the OLE header, see the fn
 		OLE_header_sanity_check().  If the OLE file fails
-		the sanity check, a return code of 103 will be 
+		the sanity check, a return code of 103 will be
 		issued.
 
 2004-Oct-18:
 	Changed unsigned int sectors to signed in OLE_follow_minichain()
-	so that negative sector requests could be detected and 
+	so that negative sector requests could be detected and
 	prevent segfaults.  Thanks to Gabriele Cariole for supplying
 	the offending mailpack.
 
@@ -80,7 +82,7 @@
 
 2004-Aug-16:
 	Added ole->FAT_limit into the general OLE struct so that when
-	traversing the FAT chain later, it can be possible to check 
+	traversing the FAT chain later, it can be possible to check
 	for requests beyond the memory block limit (which would other-
 			wise cause segfaults)
 
@@ -88,16 +90,16 @@
 	Fixed up unwanted verbosity about read mismatch in ole.c:321
 	Added macro VOLE which is 'if (ole->verbose)'.
 
-	Fixed up unwanted verbosity from ole when a negative sector 
+	Fixed up unwanted verbosity from ole when a negative sector
 	read request is made and not in verbosity mode. (ole.c:891)
 
 2004-May-22:
 	Fixed up minifat walk routines, made current_sector comparisons
 		use hex notation rather than assumed signed int comparison.
 
-	Added start section sanity checking with minifat walker. ie, 
+	Added start section sanity checking with minifat walker. ie,
 		ensuring that the starting sector is infact greater than zero
-		
+
 2004-May-21:
 	Fixed up various memory leaks which were due to premature function
 		exits, but without cleaning up any preallocated memory blocks.
@@ -111,29 +113,29 @@
 		Added 'help' output for when no paramters are given.
 
 	14H22:PLD:DEV
-		Added stream size sanity checking when decoding the attachment size in 
+		Added stream size sanity checking when decoding the attachment size in
 		olestream-unwrap which would occasionally generate some rather unlrealistc
 		stream sizes.  OLEUNWRAP_decode_attachment();
 
 	01H21:PLD:DEV
-		Finally fixed occasional segfault bug with some OLE2 files. 
+		Finally fixed occasional segfault bug with some OLE2 files.
 		Fix was to define the memory boundary limit of the ole properties
 		field and check on each pass of the loop that it wasn't being
 		breached.
-		
+
 
 2003-Nov-26:
 	20H13:PLD:DEV
 		Release 0.0.4
-		Fixed up some potential logging segfaults if used in 
+		Fixed up some potential logging segfaults if used in
 		conjunction with syslog output.
 
 2003-Nov-17:
 	16H20:PLD:DEV
-		Added bounds checking to entire processing system so that 
-		it cannot request a sector outside of the real limits of 
+		Added bounds checking to entire processing system so that
+		it cannot request a sector outside of the real limits of
 		the loaded OLE file.
-		I consider this only to be a partial fix to a problem of 
+		I consider this only to be a partial fix to a problem of
 		various documents which do not seem to be able to be decoded
 		reliably, fortunately at least the bounds checking stops the
 		segfaults.
@@ -170,13 +172,13 @@
 		Applied small patch to stop compile warnings about bp and
 		buffer pointers being used (possibly) uninitialised.
 
-	08H13:PLD:DEV 
+	08H13:PLD:DEV
 		Fixed segfault in code when extended-FAT/BAT/DIF was
 		required.  This was caused by the header-conversion fn
 		because it did not stop attempting to copy sectors beyond
 		the first 109.
 
-	00H10:PLD:DEV: 
+	00H10:PLD:DEV:
 		Fixed all 3 FAT modes, mini, standard and extended.
 
 		All files now decode assuming they have the 'Ole10Native'
