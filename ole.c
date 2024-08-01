@@ -565,7 +565,7 @@ Changes:
 \------------------------------------------------------------------*/
 int OLE_get_header( struct OLE_object *ole )
 {
-	int result = 0;
+	int result = OLE_OK;
 	ole->header.sector_size = OLE_HEADER_BLOCK_SIZE;
 	result = OLE_get_block( ole, -1, ole->header_block );
 
@@ -574,7 +574,7 @@ int OLE_get_header( struct OLE_object *ole )
 		return OLEER_NOT_OLE_FILE;
 	}
 
-	return OLE_OK;
+	return result;
 }
 
 /*-----------------------------------------------------------------\
