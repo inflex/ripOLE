@@ -6,6 +6,10 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+#ifndef WIN32
+#include <direct.h>
+#endif
+
 #include "logger.h"
 #include "pldstr.h"
 #include "bt-int.h"
@@ -1450,8 +1454,11 @@ Changes:
 int OLE_open_directory( struct OLE_object *ole, char *directory )
 {
 	int result=0;
-
-	result = mkdir( directory, S_IRWXU );
+#ifndef WIN32
+	result = mkdir(directory, S_IRWXU);
+#else
+	result = _mkdir(directory);
+#endif
 	if ((result != 0)&&(errno != EEXIST))
 	{
 		LOGGER_log("%s:%d:OLE_open_directory:ERROR: %s",FL,strerror(errno));
